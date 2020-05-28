@@ -5,3 +5,4 @@ __pycache__/*
 *.pyc
 *.log
 .ipynb_checkpoints/
+config.py
