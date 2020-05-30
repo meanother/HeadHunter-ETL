@@ -7,7 +7,9 @@ from pandas import json_normalize
 
 
 class TransformData:
-    logging.basicConfig(level=logging.INFO, format='%(asctime)s %(name)s [%(levelname)s] %(message)s')
+    # logging.basicConfig(level=logging.INFO, format='%(asctime)s %(name)s [%(levelname)s] %(message)s')
+    logging.basicConfig(level=logging.INFO, format='%(asctime)s %(name)s %(funcName)s %(process)d:%(processName)s [%(levelname)s] %(message)s')
+
     # logger = logging.getLogger(__name__)
     logger = logging.getLogger('TransformDataModule')
 

@@ -13,7 +13,7 @@ def main():
     transform = transform_data(read)
     make_insert(transform)
 
-
+#
 def fetch_data(name):
     fetch = FetchHHVacancy(name)
     write = fetch.send_to_topic(fetch.fetch_all_results())

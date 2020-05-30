@@ -18,7 +18,7 @@ class FetchHHVacancy:
 
     my_topic = 'HeadHunterETL'
 
-    logging.basicConfig(level=logging.INFO, format='%(asctime)s %(name)s [%(levelname)s] %(message)s')
+    logging.basicConfig(level=logging.INFO, format='%(asctime)s %(name)s %(funcName)s %(process)d:%(processName)s [%(levelname)s] %(message)s')
     # logger = logging.getLogger(__name__)
     logger = logging.getLogger('FetchDataModule')
 
@@ -78,6 +78,8 @@ class FetchHHVacancy:
             try:
                 # future = producer.send(topic=my_topic, value=item)
                 self.producer.send(topic=self.my_topic, value=item, key=b'in_process', headers=[('header_key', b'in_process')])
+                self.logger.info(f'send message to kafka-topic: {item}')
+
                 # record_metadata = future.get(timeout=10)
                 # print('--> The message has been sent to a topic: \
                 #         {}, partition: {}, offset: {}' \
@@ -94,9 +96,12 @@ class FetchHHVacancy:
         self.logger.info('send last message and flush producer')
 
 
-
+# #
 # def fetch_data(name):
 #     fetch = FetchHHVacancy(name)
 #     write = fetch.send_to_topic(fetch.fetch_all_results())
 #
-# fetch_data('java')
+# array = ['java', 'python', 'sql', 'oracle', 'frontend', 'data engineer', 'bigdata']
+#
+# for i in array:
+#     fetch_data(i)

@@ -5,7 +5,9 @@ from sqlalchemy.types import String, INT, Boolean, DateTime, TEXT
 
 class Database:
 
-    logging.basicConfig(level=logging.INFO, format='%(asctime)s %(name)s [%(levelname)s] %(message)s')
+    # logging.basicConfig(level=logging.INFO, format='%(asctime)s %(name)s [%(levelname)s] %(message)s')
+    logging.basicConfig(level=logging.INFO, format='%(asctime)s %(name)s %(funcName)s %(process)d:%(processName)s [%(levelname)s] %(message)s')
+
     # logger = logging.getLogger(__name__)
     logger = logging.getLogger('TransformDataModule')
 
@@ -47,7 +49,7 @@ class Database:
                              'contacts_email': String(255),
                          })
         self.logger.warning('data are inserted now')
-        total_rows = engine.execute('select count(*) from adhoc_parser.etl_hh').fetchall()[0][0]
-        self.logger.warning('-------------------------------------')
-        self.logger.warning(f'Total row in table adhoc_parser.etl_hh is {str(total_rows)}')
-        self.logger.warning('-------------------------------------')
+        # total_rows = engine.execute('select count(*) from adhoc_parser.etl_hh').fetchall()[0][0]
+        # self.logger.warning('-------------------------------------')
+        # self.logger.warning(f'Total row in table adhoc_parser.etl_hh is {str(total_rows)}')
+        # self.logger.warning('-------------------------------------')

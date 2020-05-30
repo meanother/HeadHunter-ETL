@@ -15,7 +15,9 @@ from sqlalchemy.types import String, INT, Boolean, DateTime, TEXT
 
 class ReadStreamClass:
 
-    logging.basicConfig(level=logging.INFO, format='%(asctime)s %(name)s [%(levelname)s] %(message)s')
+    # logging.basicConfig(level=logging.INFO, format='%(asctime)s %(name)s [%(levelname)s] %(message)s')
+    logging.basicConfig(level=logging.INFO, format='%(asctime)s %(name)s %(funcName)s %(process)d:%(processName)s [%(levelname)s] %(message)s')
+
     # logger = logging.getLogger(__name__)
     logger = logging.getLogger('ReadDataModule')
 
@@ -36,6 +38,8 @@ class ReadStreamClass:
             offset = msg.offset
             headers = msg.headers
             key = msg.key
+            self.logger.info(message)
+            self.consumer.commit()
             if key != b'final_message':
                 json_array.append(message)
                 # logger.warning(type(message))
@@ -47,10 +51,10 @@ class ReadStreamClass:
                 self.logger.warning(f'total message collected: {str(total)}, length={str(len(json_array))}')
                 return json_array
 
-#
+# #
 # def read_data():
 #     read = ReadStreamClass()
-#     raw_data = read.fetch_data_from_topic()
-#
-# read_data()
+#     read.fetch_data_from_topic()
+# while True:
+#     read_data()
 
