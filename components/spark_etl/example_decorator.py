@@ -1,3 +1,12 @@
+# import os
+# import sys
+# MODULE_NAME = 'streaming_etl'
+# sys.path.append(os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))+os.sep+MODULE_NAME)
+# try:
+#     from components.streaming_etl.fetch import FetchHHVacancy
+# except:
+#     from fetch import FetchHHVacancy
+
 import time
 from functools import wraps
 from time import sleep
