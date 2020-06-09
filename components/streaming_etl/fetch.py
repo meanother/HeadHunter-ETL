@@ -7,18 +7,20 @@ from time import sleep
 import requests
 from kafka import KafkaProducer
 
-
-
+# log = logging.getLogger(__name__)
+# log.info('%s: Closing connection. %s', self, error or '')
 
 class FetchHHVacancy:
 
-    producer = KafkaProducer(bootstrap_servers=['localhost:9092'],
+    # bootstrap_servers = 'localhost:9092'
+    bootstrap_servers = '35.230.42.114:9092'
+    producer = KafkaProducer(bootstrap_servers=[bootstrap_servers],
                              value_serializer=lambda x: dumps(x).encode('utf-8'),
                              compression_type='gzip')
 
     my_topic = 'HeadHunterETL'
 
-    logging.basicConfig(level=logging.INFO, format='%(asctime)s %(name)s %(funcName)s %(process)d:%(processName)s [%(levelname)s] %(message)s')
+    logging.basicConfig(level=logging.DEBUG, format='%(asctime)s %(name)s %(funcName)s %(process)d:%(processName)s [%(levelname)s] %(message)s')
     # logger = logging.getLogger(__name__)
     logger = logging.getLogger('FetchDataModule')
 
@@ -79,7 +81,6 @@ class FetchHHVacancy:
                 # future = producer.send(topic=my_topic, value=item)
                 self.producer.send(topic=self.my_topic, value=item, key=b'in_process', headers=[('header_key', b'in_process')])
                 self.logger.info(f'send message to kafka-topic: {item}')
-
                 # record_metadata = future.get(timeout=10)
                 # print('--> The message has been sent to a topic: \
                 #         {}, partition: {}, offset: {}' \
@@ -99,7 +100,11 @@ class FetchHHVacancy:
 # #
 # def fetch_data(name):
 #     fetch = FetchHHVacancy(name)
-#     write = fetch.send_to_topic(fetch.fetch_all_results())
+#     fetch.send_to_topic(fetch.fetch_all_results())
+#
+#
+# fetch_data('python')
+
 #
 # array = ['java', 'python', 'sql', 'oracle', 'frontend', 'data engineer', 'bigdata']
 #

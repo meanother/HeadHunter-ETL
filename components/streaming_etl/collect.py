@@ -41,7 +41,7 @@ def make_insert(dataframe):
 # array = ['java', 'python', 'sql', 'oracle', 'frontend', 'data engineer', 'bigdata']
 # array = ['sql', 'bigdata']
 array = ['python']
-# for i in array:
-#     fetch_data(i)
+for i in array:
+    fetch_data(i)
 while True:
     main()

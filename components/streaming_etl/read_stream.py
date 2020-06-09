@@ -21,8 +21,11 @@ class ReadStreamClass:
     # logger = logging.getLogger(__name__)
     logger = logging.getLogger('ReadDataModule')
 
+    # bootstrap_servers = 'localhost:9092'
+    bootstrap_servers = '35.230.42.114:9092'
+
     consumer = KafkaConsumer(
-        bootstrap_servers=['localhost:9092'],
+        bootstrap_servers=[bootstrap_servers],
         auto_offset_reset='earliest',
         enable_auto_commit=True,
         group_id='headhunter_group',
@@ -50,6 +53,11 @@ class ReadStreamClass:
                 self.logger.info('have a last messsage, go to collect json array')
                 self.logger.warning(f'total message collected: {str(total)}, length={str(len(json_array))}')
                 return json_array
+
+
+
+# test = ReadStreamClass()
+# test.fetch_data_from_topic()
 
 # #
 # def read_data():
