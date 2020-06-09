@@ -8,12 +8,11 @@ from config import Config
 
 
 def main():
-    #
     read = read_data()
     transform = transform_data(read)
     make_insert(transform)
 
-#
+
 def fetch_data(name):
     fetch = FetchHHVacancy(name)
     write = fetch.send_to_topic(fetch.fetch_all_results())
