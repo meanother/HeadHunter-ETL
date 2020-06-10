@@ -20,7 +20,7 @@ class FetchHHVacancy:
 
     my_topic = 'HeadHunterETL'
 
-    logging.basicConfig(level=logging.DEBUG, format='%(asctime)s %(name)s %(funcName)s %(process)d:%(processName)s [%(levelname)s] %(message)s')
+    logging.basicConfig(level=logging.INFO, format='%(asctime)s %(name)s %(funcName)s %(process)d:%(processName)s [%(levelname)s] %(message)s')
     # logger = logging.getLogger(__name__)
     logger = logging.getLogger('FetchDataModule')
 
@@ -61,8 +61,8 @@ class FetchHHVacancy:
         count = self.get_total_number_of_vanacy()
         self.logger.info(f'total number of pages: {count}')
         self.logger.info(f'start get all pages')
-        for i in range(count):  # TODO need to rollback
-            # for i in range(3):
+        # for i in range(count):  # TODO need to rollback
+        for i in range(2):  # TODO need to rollback
             fetch_single_result(i)
         # print(len(array))
         return array
@@ -98,12 +98,12 @@ class FetchHHVacancy:
 
 
 # #
-# def fetch_data(name):
-#     fetch = FetchHHVacancy(name)
-#     fetch.send_to_topic(fetch.fetch_all_results())
-#
-#
-# fetch_data('python')
+def fetch_data(name):
+    fetch = FetchHHVacancy(name)
+    fetch.send_to_topic(fetch.fetch_all_results())
+
+
+fetch_data('python')
 
 #
 # array = ['java', 'python', 'sql', 'oracle', 'frontend', 'data engineer', 'bigdata']
