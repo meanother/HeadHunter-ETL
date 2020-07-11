@@ -61,8 +61,8 @@ class FetchHHVacancy:
         count = self.get_total_number_of_vanacy()
         self.logger.info(f'total number of pages: {count}')
         self.logger.info(f'start get all pages')
-        # for i in range(count):  # TODO need to rollback
-        for i in range(2):  # TODO need to rollback
+        for i in range(count):  # TODO need to rollback
+        # for i in range(2):  # TODO need to rollback
             fetch_single_result(i)
         # print(len(array))
         return array
@@ -90,9 +90,9 @@ class FetchHHVacancy:
             except:
                 self.logger.error(traceback.format_exc())
             # finally:
-        self.logger.warning('producer flush!')
         # self.producer.flush()
         self.producer.send(topic=self.my_topic, value=None, key=b'final_message', headers=[('header_key', b'final_message')])
+        self.logger.warning('producer flush!')
         self.producer.flush()
         self.logger.info('send last message and flush producer')
 
@@ -103,10 +103,10 @@ def fetch_data(name):
     fetch.send_to_topic(fetch.fetch_all_results())
 
 
-fetch_data('python')
+# fetch_data('python')
 
-#
-# array = ['java', 'python', 'sql', 'oracle', 'frontend', 'data engineer', 'bigdata']
-#
-# for i in array:
-#     fetch_data(i)
+# #
+array = ['java', 'python', 'sql', 'oracle', 'frontend', 'data engineer', 'bigdata']
+
+for i in array:
+    fetch_data(i)

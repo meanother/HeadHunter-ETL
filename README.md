@@ -85,3 +85,17 @@ kafka/bin/kafka-topics.sh --create --zookeeper localhost:2181 --replication-fact
 
 
 sudo systemctl daemon-reload
+
+
+
+#### make install python 3.7
+
+```buildoutcfg
+wget https://www.python.org/ftp/python/3.7.3/Python-3.7.3.tgz ; \
+tar xvf Python-3.7.* ; \
+cd Python-3.7.3 ; \
+mkdir ~/.python ; \
+./configure --enable-optimizations --prefix=/home/www/.python ; \
+make -j8 ; \
+sudo make altinstall
+```

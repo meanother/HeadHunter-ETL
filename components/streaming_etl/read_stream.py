@@ -27,7 +27,7 @@ class ReadStreamClass:
     consumer = KafkaConsumer(
         bootstrap_servers=[bootstrap_servers],
         auto_offset_reset='earliest',
-        enable_auto_commit=True,
+        # enable_auto_commit=True,
         group_id='headhunter_group',
         value_deserializer=lambda x: loads(x.decode('utf-8')))
 
@@ -42,7 +42,7 @@ class ReadStreamClass:
             headers = msg.headers
             key = msg.key
             self.logger.info(message)
-            self.consumer.commit()
+            # self.consumer.commit()
             if key != b'final_message':
                 json_array.append(message)
                 # logger.warning(type(message))
@@ -51,6 +51,7 @@ class ReadStreamClass:
                 self.logger.info(
                     f'fetch message with params: offset={offset}, headers={headers}, key={key} and append json array')
                 self.logger.info('have a last messsage, go to collect json array')
+                self.consumer.commit()
                 self.logger.warning(f'total message collected: {str(total)}, length={str(len(json_array))}')
                 return json_array
 
