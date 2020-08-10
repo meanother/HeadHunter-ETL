@@ -125,28 +125,3 @@ while True:
 #     password='12345').mode('append').save()
 
 
-'''
-        df = temp_df[['id',
-                      'name',
-                      'has_test',
-                      'published_at',
-                      'created_at',
-                      'url',
-                      'area.name',
-                      'salary.from',
-                      'salary.to',
-                      'salary.currency',
-                      'salary.gross',
-                      'address.city',
-                      'address.street',
-                      'address.building',
-                      'address.raw',
-                      'address.metro.station_name',
-                      'employer.id',
-                      'employer.name',
-                      'snippet.requirement',
-                      'snippet.responsibility',
-                      'contacts.name',
-                      'contacts.email'
-                      ]]
-'''
