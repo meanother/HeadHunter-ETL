@@ -121,27 +121,34 @@ import os
 #     .set('spark.jars.packages', 'org.apache.spark:spark-sql-kafka-0-10_2.12:2.4.5') \
 
 # spark-sql-kafka-0-10_2.11-2.4.5.jar
-
-conf = SparkConf().setMaster('spark://manjaro:7077')\
+# manjaro
+conf = SparkConf().setMaster('spark://35.230.42.114:7077')\
     .setAppName('Yandex-app') \
+    .set("spark.shuffle.service.enabled", "false") \
+    .set("spark.dynamicAllocation.enabled", "false") \
     .set('spark.jars', '/usr/local/spark/jars/postgresql-42.2.14.jar') \
     .set('spark.jars', '/usr/local/spark/jars/spark-sql-kafka-0-10_2.11-2.4.5.jar') \
     .set('spark.jars', '/usr/local/spark/jars/kafka-clients-0.10.2.2.jar') \
     .set('spark.jars.packages', 'org.apache.spark:spark-sql-kafka-0-10_2.11:2.4.5') \
-    .set('spark.driver.maxResultSize', '4g')\
-    .set('spark.dynamicAllocation.enabled', 'false')\
+    .set('spark.driver.maxResultSize', '2g')\
+    .set('spark.driver.port', "20002")\
+    .set("spark.driver.bindAddress", "0.0.0.0")\
+    .set("spark.blockManager.port", "6060")\
+    .set('spark.driver.memory', '4g')\
     .set('spark.executor.memory', '4g')\
-    .set('spark.executor.cores', '4')
+    .set('spark.num.executors', '2')\
+    .set('spark.executor.cores', '2')
 
 sc = SparkContext.getOrCreate(conf=conf)
 SP = SparkSession(sc)
 print(sc.version)
 
+# Привет Аа
 
 df1 = SP.read \
     .format("jdbc") \
     .option("url", "jdbc:postgresql://77.244.65.15:58642/parsing_db") \
-    .option("query", 'select * from adhoc_parser.audit_yandex_bot where report_date = date(now()) -{} limit 20'.format(INTERVAL)) \
+    .option("query", 'select * from adhoc_parser.audit_yandex_bot where report_date = date(now()) -{} limit 50'.format(INTERVAL)) \
     .option("user", "semenov") \
     .option("password", "12345") \
     .load()
@@ -149,6 +156,8 @@ df1 = SP.read \
 # print(df)
 df1.show()
 df1.printSchema()
+
+# 0Oo lLiI
 #
 # dataframe = SP.readStream \
 #     .format("kafka") \
@@ -183,6 +192,17 @@ print('-------------')
 #report_date, has_403, id, waste_time, parse_time, url
 print(df1)
 print(type(df1))
+
+
+# json_df = df1.toJSON(use_unicode=True)
+# print(json_df)
+# results = json.loads(df1.toJSON().collect())
+# results = df1.toJSON().map(lambda j: json.loads(j)).collect()
+# print(results)
+
+json_df = df1.write.format('json')
+# print(json_df.json('data/'))
+
 #
 # ds = dataframe.selectExpr("to_json(struct(*)) AS value")
 # print(ds)
@@ -201,18 +221,18 @@ print(type(df1))
 #     .option("topic", TOPIC_NAME) \
 #     .start()
 from pyspark.sql.functions import to_json, struct, lit
-
+'''
 stream_df = df1.select(to_json(struct([df1[x] for x in df1.columns])).alias("value")).withColumn('key', lit('process'))
-
 stream_df.show()
 stream_df.printSchema()
 
-stream_df.write.format("kafka").option("kafka.bootstrap.servers", BOOTSTRAP_SERVER).option("topic", TOPIC_NAME).save()
+# WORK WRITE TOPIC
+#stream_df.write.format("kafka").option("kafka.bootstrap.servers", BOOTSTRAP_SERVER).option("topic", TOPIC_NAME).save()
+'''
 
 
 
-
-
+'''
 from confluent_kafka import Consumer
 
 print('------ READ TOPIC --------')
@@ -226,7 +246,7 @@ c = Consumer({
 c.subscribe([TOPIC_NAME])
 
 while True:
-    msg = c.poll(1.0)
+    msg = c.poll(5.0)
 
     if msg is None:
         continue
@@ -237,7 +257,7 @@ while True:
     print('Received message: {}'.format(msg.value().decode('utf-8')))
 
 c.close()
-
+'''
 # consumer = KafkaConsumer(
 #     bootstrap_servers=[BOOTSTRAP_SERVER],
 #     auto_offset_reset='earliest',

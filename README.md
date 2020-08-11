@@ -99,3 +99,17 @@ mkdir ~/.python ; \
 make -j8 ; \
 sudo make altinstall
 ```
+
+
+#### create spark stand-alone app
+
+```buildoutcfg
+wget https://archive.apache.org/dist/spark/spark-2.4.5/spark-2.4.5-bin-hadoop2.7.tgz
+sudo tar xvf spark-2.4.5-bin-hadoop2.7.tgz -C /home/apache/spark
+sudo ./home/apache/spark/sbin/start-master.sh
+
+sudo ./home/apache/spark/sbin/start-slave.sh spark://serverpromise:7077
+or
+sudo ./home/apache/spark/sbin/start-slave.sh --cores 4 --memory 4g spark://35.230.42.114:7077
+
+```
