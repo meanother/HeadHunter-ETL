@@ -110,6 +110,6 @@ sudo ./home/apache/spark/sbin/start-master.sh
 
 sudo ./home/apache/spark/sbin/start-slave.sh spark://serverpromise:7077
 or
-sudo ./home/apache/spark/sbin/start-slave.sh --cores 4 --memory 4g spark://35.230.42.114:7077
+sudo ./home/apache/spark/sbin/start-slave.sh --cores 4 --memory 4g --port 22445 spark://35.230.42.114:7077
 
 ```

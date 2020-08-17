@@ -70,7 +70,7 @@ df = spark.read \
     .option("url", "jdbc:postgresql://77.244.65.15:58642/parsing_db") \
     .option("query", 'select * from adhoc_parser.audit_yandex_bot where report_date = date(now()) -{} limit 500'.format(INTERVAL)) \
     .option("user", "semenov") \
-    .option("password", "12345") \
+    .option("password", DATABASE_PASS) \
     .load()
 
 # print(df)
@@ -84,7 +84,7 @@ def write_to_db(df):
         driver='org.postgresql.Driver',
         dbtable='adhoc_parser.tested_df',
         user='semenov',
-        password='12345').mode('append').save()
+        password=DATABASE_PASS).mode('append').save()
 
 
 result = df.withColumn('URLX', regexp_extract(col('url'), regex, 0))
@@ -135,7 +135,7 @@ conf = SparkConf().setMaster('spark://35.230.42.114:7077')\
     .set("spark.driver.bindAddress", "0.0.0.0")\
     .set("spark.blockManager.port", "6060")\
     .set('spark.driver.memory', '4g')\
-    .set('spark.executor.memory', '4g')\
+    .set('spark.executor.memory', '1g')\
     .set('spark.num.executors', '2')\
     .set('spark.executor.cores', '2')
 
@@ -150,7 +150,7 @@ df1 = SP.read \
     .option("url", "jdbc:postgresql://77.244.65.15:58642/parsing_db") \
     .option("query", 'select * from adhoc_parser.audit_yandex_bot where report_date = date(now()) -{} limit 50'.format(INTERVAL)) \
     .option("user", "semenov") \
-    .option("password", "12345") \
+    .option("password", DATABASE_PASS) \
     .load()
 
 # print(df)
